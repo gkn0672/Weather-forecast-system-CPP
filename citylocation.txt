@@ -1,0 +1,15 @@
+[1, 1]-3-Bukkit_Timah
+[1, 2]-3-Bukkit_Timah
+[1, 3]-3-Bukkit_Timah
+[2, 1]-3-Bukkit_Timah
+[2, 2]-3-Bukkit_Timah
+[2, 3]-3-Bukkit_Timah
+[2, 7]-2-Clementi
+[2, 8]-2-Clementi
+[3, 1]-3-Bukkit_Timah
+[3, 2]-3-Bukkit_Timah
+[3, 3]-3-Bukkit_Timah
+[3, 7]-2-Clementi
+[3, 8]-2-Clementi
+[7, 7]-1-Tiong_bahru
+

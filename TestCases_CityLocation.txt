@@ -1,0 +1,16 @@
+[2, 8]-1-Tokyo
+[2, 2]-2-Beijing
+[2, 3]-2-Beijing
+[3, 2]-2-Beijing
+[3, 3]-2-Beijing
+[6, 8]-3-Oslo
+[6, 9]-3-Oslo
+[6, 10]-3-Oslo
+[7, 8]-3-Oslo
+[7, 9]-3-Oslo
+[7, 10]-3-Oslo
+[8, 8]-3-Oslo
+[8, 9]-3-Oslo
+[8, 10]-3-Oslo
+[7, 2]-4-Paris
+
