@@ -12,14 +12,13 @@ string**& cloud_map, string**& cloud_converted, int**& cloud_original) {
 	for (int i=0; i<raw_cloud.size(); i++) {
 		v = ProcessString(raw_cloud[i], "-");
 		s = ProcessCoordinate(v[0]);
-		value = v[1].substr(0,1);
 		coordinate = ProcessString(s, " ");
 		x = ConvertStringToInteger(coordinate[0]);
 		y = ConvertStringToInteger(coordinate[1]);
 
 		//Assign value
 		if((x < width) && (y < height)) {
-			cloud_map[height - y - 1][x] = value;
+			cloud_map[height - y - 1][x] = ConvertToIndex(v[1]);
 			cloud_original[height - y - 1][x] = ConvertStringToInteger(v[1]);
 		}
 

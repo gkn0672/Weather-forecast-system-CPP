@@ -237,6 +237,16 @@ string ConvertToLMH(int val) {
 	return value;
 }
 
+string ConvertToIndex(string val) {
+	string value;
+	if (TrimSpace(val).size() == 1) {
+		value = "0";
+	} else {
+		value = val.substr(0, 1);
+	}
+	return value;
+}
+
 /* Sleep function that can run on both window and ubuntu */
 void MySleep(int amount) {
 	#ifdef WIN32

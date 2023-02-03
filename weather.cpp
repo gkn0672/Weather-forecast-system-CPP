@@ -41,9 +41,9 @@ string**& city_map, string**& cloud_map, string**& pressure_map, int**& pressure
 			if(city_belong != "") {
 				id = ConvertStringToInteger(city_belong);
 				id --;
-				city_size[rp_size - id - 1]++;
-				cloud_sum[rp_size - id - 1] += cloud_original[i][j];
-				pressure_sum[rp_size - id - 1] += pressure_original[i][j];
+				city_size[id]++;
+				cloud_sum[id] += cloud_original[i][j];
+				pressure_sum[id] += pressure_original[i][j];
 			}
 		}
 	}

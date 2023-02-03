@@ -4,7 +4,7 @@
 void Pressure(int height, int width, vector<string>& raw_pressure, 
 string**& pressure_map, string**& pressure_converted, int**& pressure_orginal) {
     vector <string> v;
-    string s, value;
+    string s;
     vector <string> coordinate;
     int x,y;
 
@@ -12,14 +12,13 @@ string**& pressure_map, string**& pressure_converted, int**& pressure_orginal) {
     for (int i=0; i<raw_pressure.size(); i++) {
 		v = ProcessString(raw_pressure[i], "-");
 		s = ProcessCoordinate(v[0]);
-		value = v[1].substr(0,1);
 		coordinate = ProcessString(s, " ");
 		x = ConvertStringToInteger(coordinate[0]);
 		y = ConvertStringToInteger(coordinate[1]);
 
 		//Assign value
 		if((x < width) && (y < height)) {
-			pressure_map[height - y - 1][x] = value;	
+			pressure_map[height - y - 1][x] = ConvertToIndex(v[1]);	
 			pressure_orginal[height - y - 1][x] = ConvertStringToInteger(v[1]);
 		}		
 		

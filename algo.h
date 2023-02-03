@@ -17,6 +17,7 @@ string ProcessCoordinate(string str);
 string TrimSpace(string str);
 string SurroundCheck(string **map, int x, int y, int tableWidth, int tableHeight);
 string ConvertToLMH(int val);
+string ConvertToIndex(string val);
 
 int ConvertStringToInteger(string s);
 int GetRandomNumber(int min, int max);
