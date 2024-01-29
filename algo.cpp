@@ -145,79 +145,25 @@ void DeleteIntMap(int** arr, int height) {
 
 /* Check neighbor to see which city it belongs to */
 string SurroundCheck(string **map, int x, int y, int tableWidth, int tableHeight) {
-	string value;
-	//Current pos
-	value = map[x][y];
-	if(value != " ") {
-		return value;
-	}
-	
-	// Left
-	if((x-1)>=0){
-		value = map[x-1][y];
-		if(value != " ") {
-			return value;
-		}
+    for (int dx = -1; dx <= 1; ++dx) {
+        for (int dy = -1; dy <= 1; ++dy) {
+            if (dx == 0 && dy == 0) {
+                continue;  // Skip the current position
+            }
+
+            int newX = x + dx;
+            int newY = y + dy;
+
+            if (newX >= 0 && newX < tableWidth && newY >= 0 && newY < tableHeight) {
+                const std::string& value = map[newX][newY];
+                if (value != " ") {
+                    return value;
+                }
+            }
+        }
     }
 
-    // Right
-    if((x+1)<tableWidth){
-		value = map[x+1][y]; 
-		if(value != " ") {
-			return value;
-		}
-    }
-
-    //Up
-    if((y-1)>=0){
-		value = map[x][y-1];
-		if(value != " ") {
-			return value;
-		}
-    }
-
-    //Down
-    if((y+1)<tableHeight) {
-		value = map[x][y+1];
-        if(value != " ") {
-			return value;
-		}
-    }
-
-    // Left down
-    if((x-1)>=0 && ((y+1)<tableHeight)) {
-		value = map[x-1][y+1];
-		if(value != " ") {
-			return value;
-		}
-    }
-
-    // Right Down
-    if((x+1)<tableWidth && (y+1)<tableHeight) {
-   		value = map[x+1][y+1];
-   		if(value != " ") {
-			return value;
-		}
-    }
-
-    // Right UP
-    if((x+1)<tableWidth && (y-1)>=0) {
-   		value = map[x+1][y-1];
-   		if(value != " ") {
-			return value;
-		}
-    }
-
-    // Left Up
-    if((x-1)>=0 && (y-1)>=0){
-    	value = map[x-1][y-1];
-    	if(value != " ") {
-			return value;
-		}
-    }
-    
-    //Not belong to any city
-	return "";
+    return "";
 }
 
 /* Convert data to LMH */
@@ -247,24 +193,24 @@ string ConvertToIndex(string val) {
 	return value;
 }
 
-/* Sleep function that can run on both window and ubuntu */
+/* Sleep function that can run on both window and unix */
 void MySleep(int amount) {
 	#ifdef WIN32
 	Sleep(amount * 1000);
 	#define window
 	#else
 	sleep(amount);
-	#define ubuntu
+	#define unix
 	#endif
 }
 
-/* Clear screen function that can run on both window and ubuntu */
+/* Clear screen function that can run on both window and unix */
 void ClearScreen() {
 	#ifdef WIN32
 	system("cls");
 	#define window
 	#else
 	system("clear");
-	#define ubuntu
+	#define unix
 	#endif
 }

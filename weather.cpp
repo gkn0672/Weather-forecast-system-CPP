@@ -80,64 +80,46 @@ string ToString(City_report r) {
 
 
 //Convert average value to string format
-void Assign(City_report &r){
+struct LevelAssignments {
+    std::string low;
+    std::string medium;
+    std::string high;
+};
 
-	switch(static_cast<int>(r.ave_cloud)) {
-		case 0 ... 34:
-			r.cloud_lv = "L";
-			break;
-		case 35 ... 64:
-			r.cloud_lv = "M";
-			break;
-		default:
-			r.cloud_lv = "H";
-			break;
-	}
+void Assign(City_report &r) {
+    auto getLevel = [](double value, const LevelAssignments &levels) -> std::string {
+        if (value <= 34) {
+            return levels.low;
+        } else if (value <= 64) {
+            return levels.medium;
+        } else {
+            return levels.high;
+        }
+    };
 
-	switch(static_cast<int>(r.ave_pressure)) {
-		case 0 ... 34:
-			r.pres_lv = "L";
-			break;
-		case 35 ... 64:
-			r.pres_lv = "M";
-			break;
-		default:
-			r.pres_lv = "H";
-			break;
-	}
+    LevelAssignments cloudLevels{"L", "M", "H"};
+    LevelAssignments pressureLevels{"L", "M", "H"};
 
-	if(r.pres_lv == "L") {
-		if(r.cloud_lv == "L") {
-			r.rain = 70.0;
-			r.symbol = "~~~~\n~~~~~\n  \\\\\\";
-		} else if(r.cloud_lv == "M") {
-			r.rain = 80.0;
-			r.symbol = "~~~~\n~~~~~\n \\\\\\\\";
-		} else {
-			r.rain = 90.0;
-			r.symbol = "~~~~\n~~~~~\n\\\\\\\\\\";
-		}
-	} else if(r.pres_lv == "M") {
-		if(r.cloud_lv == "L") {
-			r.rain = 40.0;
-			r.symbol = "~~~~\n~~~~~\n";
-		} else if(r.cloud_lv == "M") {
-			r.rain = 50.0;
-			r.symbol = "~~~~\n~~~~~\n    \\";
-		} else {
-			r.rain = 60.0;
-			r.symbol = "~~~~\n~~~~~\n   \\\\";
-		}
-	} else{
-		if(r.cloud_lv == "L") {
-			r.rain = 10.0;
-			r.symbol = "~\n~~\n";
-		} else if(r.cloud_lv == "M") {
-			r.rain = 20.0;
-			r.symbol = "~~\n~~~\n";
-		} else {
-			r.rain = 30.0;
-			r.symbol = "~~~\n~~~~\n";
-		}
-	}
+    r.cloud_lv = getLevel(r.ave_cloud, cloudLevels);
+    r.pres_lv = getLevel(r.ave_pressure, pressureLevels);
+
+    // Lookup table for rain values and symbols
+    std::unordered_map<std::string, double> rainValues{
+        {"LL", 70.0}, {"LM", 80.0}, {"LH", 90.0},
+        {"ML", 40.0}, {"MM", 50.0}, {"MH", 60.0},
+        {"HL", 10.0}, {"HM", 20.0}, {"HH", 30.0}
+    };
+
+    std::unordered_map<std::string, std::string> symbolValues{
+        {"LL", "~~~~\n~~~~~\n  \\\\\\"}, {"LM", "~~~~\n~~~~~\n \\\\\\\\"}, {"LH", "~~~~\n~~~~~\n\\\\\\\\\\"},
+        {"ML", "~~~~\n~~~~~\n"}, {"MM", "~~~~\n~~~~~\n    \\"}, {"MH", "~~~~\n~~~~~\n   \\\\"},
+        {"HL", "~\n~~\n"}, {"HM", "~~\n~~~\n"}, {"HH", "~~~\n~~~~\n"}
+    };
+
+    // Combine levels to get the key for lookup
+    std::string levelKey = r.pres_lv + r.cloud_lv;
+
+    // Assign rain and symbol based on lookup
+    r.rain = rainValues[levelKey];
+    r.symbol = symbolValues[levelKey];
 }

@@ -12,8 +12,8 @@
 #include "weather.h"
 #include "plot.h"
 
-string student_ID = "7311217";
-string student_name = "Nguyen Gia Khanh";
+string student_ID = "7559070";
+string student_name = "Do Truong Giang";
 
 bool in = false;
 vector <string> info;

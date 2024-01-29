@@ -140,9 +140,9 @@ void ToGraph(vector<City_report> &alist, string input) {
   const int chart_height = 25;
   for (int current_height = chart_height; current_height > 0; --current_height) {
     if (!(current_height%5)){
-      cout << setw(5) << current_height * 4 << " | ";
+      cout << setw(5) << current_height * 4 << "\u001b[31;1m | \033[0m"; // Bright red color
     } else {
-      cout << "      | ";
+      cout << "\u001b[31;1m      | \033[0m"; // Bright red color
     }
 
 		for (int i=0; i< stat.size(); i++) {
@@ -168,35 +168,35 @@ void ToGraph(vector<City_report> &alist, string input) {
         //int decimal = floor(stat_convert);
         decimal = decimal % 10;
         if(decimal == 0){
-          cout << "  _______  ";
-        } else if(decimal == 1){
-          cout << "  .......  ";
-        } else if(decimal == 2){
-          cout << "  -------  ";
-        } else if(decimal == 3){
-          cout << "  ~~~~~~~  ";
-        } else if(decimal == 4){
-          cout << "  =======  ";
-        } else if(decimal == 5){
-          cout << "  :::::::  ";
-        } else if(decimal == 6){
-          cout << "  >>>>>>>  ";
-        } else if(decimal == 7){
-          cout << "  ^^^^^^^  ";
-        } else if(decimal == 8){
-          cout << "  '''''''  ";
+            cout << "\033[1;31m  _______  \033[0m"; // Red color
+        } else if (decimal == 1) {
+            cout << "\033[1;32m  .......  \033[0m"; // Green color
+        } else if (decimal == 2) {
+            cout << "\033[1;33m  -------  \033[0m"; // Yellow color
+        } else if (decimal == 3) {
+            cout << "\033[1;35m  ~~~~~~~  \033[0m"; // Purple color
+        } else if (decimal == 4) {
+            cout << "\033[1;36m  =======  \033[0m"; // Cyan color
+        } else if (decimal == 5) {
+            cout << "\033[1;36m  :::::::  \033[0m"; // Cyan color
+        } else if (decimal == 6) {
+            cout << "\033[1;35m  >>>>>>>  \033[0m"; // Purple color
+        } else if (decimal == 7) {
+            cout << "\033[1;33m  ^^^^^^^  \033[0m"; // Yellow color
+        } else if (decimal == 8) {
+            cout << "\033[1;32m  '''''''  \033[0m"; // Green color
         } else{
           cout << "  |||||||  ";
         }
       }else {
-          cout << " |       | ";
+          cout << "\033[1;34m |       | \033[0m";
       }
-		}
+		} 
 			cout << endl;
 	}
   cout << "      +-";
 	for (int i = 0; i < stat.size(); ++i) {
-		cout << "-----v-----";
+		cout << "\033[1;31m-----v-----\033[0m";
 	}
 	cout << "-->" << endl;
 
@@ -205,54 +205,55 @@ void ToGraph(vector<City_report> &alist, string input) {
 	for (int i = 0; i < alist.size(); ++i) {
 		cout << center(alist[i], 9) << "  ";
 	}
+  
   cout << endl;
 }
 
 /* Draw histogram */
 void ToHistogram() {
-  cout << endl;
-  cout << endl;
-  cout << "[Data distribution]" << endl;
-  cout << endl;
-  cout << "      ^ " << endl;
+    cout << endl;
+    cout << endl;
+    cout << "[Data distribution]" << endl;
+    cout << endl;
+    cout << "      ^ " << endl;
 
-  int max_count = *std::max_element(begin(count_entry), end(count_entry));
-  int chart_height = 5 * max_count;
-  for (int current_height = chart_height; current_height > 0; --current_height) {
-    if (!(current_height%5)){
-      cout << setw(5) << (current_height*max_count)/chart_height << " | ";
-    } else {
-      cout << "      | ";
+    int max_count = *std::max_element(begin(count_entry), end(count_entry));
+    int chart_height = 5 * max_count;
+    for (int current_height = chart_height; current_height > 0; --current_height) {
+        if (!(current_height % 5)) {
+            cout << setw(5) << (current_height * max_count) / chart_height << " | ";
+        } else {
+            cout << "      | ";
+        }
+
+        for (int i = 0; i < count_entry.size(); i++) {
+            int bar_height = floor(count_entry[i]) + 1;
+            if (bar_height + 1 == current_height) {
+                cout << "\033[1;31m" << CenterInt(count_entry[i], 12) << "\033[0m"; // Red color
+            } else if (bar_height < current_height) {
+                cout << "           ";
+            } else if (bar_height == current_height) {
+                cout << "\033[1;32m  _______  \033[0m"; // Green color
+            } else {
+                cout << "\033[1;34m |       | \033[0m"; // Blue color
+            }
+        }
+        cout << endl;
     }
+    cout << "      +-";
+    for (int i = 0; i < count_entry.size(); ++i) {
+        cout << "-----v-----";
+    }
+    cout << "-->" << endl;
+    cout << "           ";
+    cout << "\033[1;36m0 - 20    20 - 40    40 - 60    60 - 80    80 - 100\033[0m" << endl; // Cyan color
+    cout << endl;
+    auto it = std::minmax_element(count_entry.begin(), count_entry.end());
+    int max_idx = std::distance(count_entry.begin(), it.second);
 
-		for (int i=0; i< count_entry.size(); i++) {
-			int bar_height = floor(count_entry[i]) + 1;
-      if (bar_height + 1 == current_height){
-        cout << CenterInt(count_entry[i], 12);
-      } else if (bar_height < current_height){
-        cout << "           ";
-      } else if (bar_height == current_height){
-          cout << "  _______  ";  
-      }else {
-          cout << " |       | ";
-      }
-		}
-			cout << endl;
-	}
-  cout << "      +-";
-	for (int i = 0; i < count_entry.size(); ++i) {
-		cout << "-----v-----";
-	}
-	cout << "-->" << endl;
-  cout << "           " ;
-  cout << "0 - 20    20 - 40    40 - 60    60 - 80    80 - 100" << endl;
-  cout << endl;
-  auto it = std::minmax_element(count_entry.begin(), count_entry.end());
-  int max_idx = std::distance(count_entry.begin(), it.second);
-
-  cout << "Most frequent data range: " << "(" << entry_range[max_idx] << ")" << endl;
-  cout << "Frequency: " << count_entry[max_idx] << endl; 
-  cout << endl;
+    cout << "Most frequent data range: " << "(" << entry_range[max_idx] << ")" << endl;
+    cout << "Frequency: " << count_entry[max_idx] << endl;
+    cout << endl;
 }
 
 /* Generate data summary */
